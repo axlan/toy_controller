@@ -34,7 +34,7 @@ static constexpr std::array<ControllerButton, 8> BUTTONS = {{
 
 static constexpr const char* DEVICE_NAME = "HappyController";
 static constexpr const char* MQTT_SERVER = "192.168.1.110";
-static constexpr const char* MQTT_TOPIC = "buttons_pressed";
+static constexpr const char* MQTT_TOPIC = "controller/buttons_pressed";
 
 
 bool CheckPin(int pin) {
@@ -68,7 +68,7 @@ bool reconnect() {
     // Wait 5 seconds before retrying
     next_reconnect = millis() + 5000;
   }
-  
+
   return false;
 }
 
@@ -137,7 +137,9 @@ void loop()
           msg += ',';
         }
         first = false;
+        msg += '"';
         msg += BUTTONS[i].name;
+        msg += '"';
       }
     }
     msg += ']';
