@@ -59,17 +59,6 @@ client.connect("192.168.1.110", 1883, 60)
 
 wled_url = "http://192.168.1.123/json/state"
 
-BUTTON_LOCATIONS = {
-    'LEFT': (135, 385),
-    'RIGHT': (250, 362),
-    'UP': (185, 315),
-    'DOWN': (208, 427),
-    'A': (470, 197),
-    'B': (570, 145),
-    'C': (628, 235),
-    'D': (535, 287),
-}
-
 # resp = requests.get(wled_url)
 # cur_state = json.dumps(resp.json())
 
