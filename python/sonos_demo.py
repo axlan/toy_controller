@@ -19,23 +19,26 @@ def on_message(client, userdata, msg):
     print(msg.topic+" "+json_str)
     new_buttons = json.loads(json_str)
 
-    if 'LEFT' in new_buttons:
-        sonos.previous()
-    elif 'RIGHT' in new_buttons:
-        sonos.next()
-    elif 'UP' in new_buttons:
-        pass
-    elif 'DOWN' in new_buttons:
-        pass
+    try:
+        if 'LEFT' in new_buttons:
+            sonos.previous()
+        elif 'RIGHT' in new_buttons:
+            sonos.next()
+        elif 'UP' in new_buttons:
+            pass
+        elif 'DOWN' in new_buttons:
+            pass
 
-    if 'A' in new_buttons:
-        sonos.play()
-    elif 'B' in new_buttons:
-        sonos.play()
-    elif 'C' in new_buttons:
-        sonos.pause()
-    elif 'D' in new_buttons:
-        sonos.pause()
+        if 'A' in new_buttons:
+            sonos.play()
+        elif 'B' in new_buttons:
+            sonos.play()
+        elif 'C' in new_buttons:
+            sonos.pause()
+        elif 'D' in new_buttons:
+            sonos.pause()
+    except Exception as e:
+        print(e)
 
 # Create an MQTT client
 client = mqtt.Client()
