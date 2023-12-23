@@ -16,6 +16,8 @@ static constexpr int PIN_B = 15;
 static constexpr int PIN_C = 14;
 static constexpr int PIN_D = 13;
 
+
+
 struct ControllerButton {
   const char* name = "";
   int pin = -1;
@@ -36,6 +38,7 @@ static constexpr const char* DEVICE_NAME = "HappyController";
 static constexpr const char* MQTT_SERVER = "192.168.1.110";
 static constexpr const char* MQTT_TOPIC = "controller/buttons_pressed";
 
+static constexpr unsigned long IDLE_TIME_MS_BEFORE_SLEEP = 1000 * 60;
 
 bool CheckPin(int pin) {
   if (pin == 17) {
@@ -113,6 +116,9 @@ void setup()
 }
 void loop()
 {
+  // Time of last button press.
+  static unsigned long last_button_press_ms = millis();
+
   // Check for over the air update request and (if present) flash it
   ArduinoOTA.handle();
   if (!mqtt_client.connected()) {
@@ -149,6 +155,13 @@ void loop()
       Serial.println("Json pub failed.");
     }
     last_button_mask = new_button_mask;
+    last_button_press_ms = millis();
+  }
+  // If time between button presses exceeds IDLE_TIME_MS_BEFORE_SLEEP, sleep until restarted.
+  // This pulls the WAKE pin (GPIO16) low which "disables" that button on the toy until
+  // restart.
+  else if (millis() - last_button_press_ms > IDLE_TIME_MS_BEFORE_SLEEP){
+    ESP.deepSleep(0);
   }
 
   mqtt_client.loop();
