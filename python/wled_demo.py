@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import paho.mqtt.client as mqtt
 import json
 import requests
@@ -62,9 +63,7 @@ wled_url = "http://192.168.1.123/json/state"
 # resp = requests.get(wled_url)
 # cur_state = json.dumps(resp.json())
 
-while True:
-    client.loop(timeout=1.0, max_packets=1)
-
+while client.loop(timeout=1.0, max_packets=1) == mqtt.MQTT_ERR_SUCCESS:
     if not state.sent:
         state.sent = True
 
@@ -75,3 +74,5 @@ while True:
             }]
         })
         print(resp.json())
+
+print('Connection Failure')

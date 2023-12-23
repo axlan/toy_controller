@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pygame
 import paho.mqtt.client as mqtt
 import json

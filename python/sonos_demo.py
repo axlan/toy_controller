@@ -55,5 +55,7 @@ wled_url = "http://192.168.1.123/json/state"
 # resp = requests.get(wled_url)
 # cur_state = json.dumps(resp.json())
 
-while True:
+while client.loop(timeout=1.0, max_packets=1) == mqtt.MQTT_ERR_SUCCESS:
     client.loop(timeout=1.0, max_packets=1)
+
+print('Connection Failure')
