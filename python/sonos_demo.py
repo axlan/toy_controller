@@ -6,7 +6,7 @@ import json
 import requests
 
 # Connect to the Sonos
-sonos = SoCo('192.168.1.109')
+sonos = SoCo('192.168.1.118')
 
 # Define MQTT callbacks
 
